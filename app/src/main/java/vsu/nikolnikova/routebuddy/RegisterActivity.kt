@@ -1,8 +1,10 @@
 package vsu.nikolnikova.routebuddy
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -59,29 +61,53 @@ class RegisterActivity : AppCompatActivity() {
                 passwordRepeat.text.toString() == password.text.toString() &&
                 password.text.length >= 6
             ) {
-                auth.createUserWithEmailAndPassword(
-                    email.text.toString(),
-                    password.text.toString()
-                ).addOnSuccessListener {
-                    db.collection("user").document(auth.currentUser!!.uid)
-                        .set(
-                            User(
-                                name.text.toString(),
-                                email.text.toString(),
-                                hashPassword(password.text.toString())
+                db.collection("user").whereEqualTo("email", email.text.toString())
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            Toast.makeText(
+                                this,
+                                "Пользователь с данной почтой уже существует",
+                                Toast.LENGTH_LONG
                             )
-                        )
-                        .addOnSuccessListener {
-                            /*val intent = Intent(this, MapsActivity::class.java)
-                            startActivity(intent)
-                            finish()*/
+                                .show()
+                        } else {
+                            auth.createUserWithEmailAndPassword(
+                                email.text.toString(),
+                                password.text.toString()
+                            ).addOnSuccessListener {
+                                db.collection("user").document(auth.currentUser!!.uid)
+                                    .set(
+                                        User(
+                                            name.text.toString(),
+                                            email.text.toString(),
+                                            hashPassword(password.text.toString())
+                                        )
+                                    )
+                                    .addOnSuccessListener {
+                                        /*val intent = Intent(this, MapsActivity::class.java)
+                                        startActivity(intent)
+                                        finish()*/
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(
+                                            this,
+                                            it.message,
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                            }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this,
+                                        it.message,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                         }
-                        .addOnFailureListener {
-                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                        }
-                }
-                    .addOnFailureListener {
-                        Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.w(TAG, "Error getting documents: ", exception)
                     }
             } else if (TextUtils.isEmpty(name.text.toString()) ||
                 TextUtils.isEmpty(email.text.toString()) ||

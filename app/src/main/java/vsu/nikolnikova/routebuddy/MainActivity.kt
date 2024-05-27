@@ -1,10 +1,12 @@
 package vsu.nikolnikova.routebuddy
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -15,6 +17,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,22 +60,47 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        val db = Firebase.firestore
         enter = findViewById(R.id.login)
 
         enter.setOnClickListener {
             if (!TextUtils.isEmpty(email.text.toString()) &&
                 !TextUtils.isEmpty(password.text.toString())
             ) {
-                auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
-                    .addOnSuccessListener {
-                        /*val intent = Intent(this, MapsActivity::class.java)
-                        intent.putExtra("uid", auth.currentUser?.uid)
-                        //getStringExtra("uid")
-                        startActivity(intent)
-                        finish()*/
+
+                db.collection("user").whereEqualTo("email", email.text.toString())
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            auth.signInWithEmailAndPassword(
+                                email.text.toString(),
+                                password.text.toString()
+                            )
+                                .addOnSuccessListener {
+                                    /*val intent = Intent(this, MapsActivity::class.java)
+                                    intent.putExtra("uid", auth.currentUser?.uid)
+                                    //getStringExtra("uid")
+                                    startActivity(intent)
+                                    finish()*/
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this,
+                                        it.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Пользователя с такой почтой нет",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener { exception ->
+                        Log.w(TAG, "Error getting documents: ", exception)
                     }
             } else if (TextUtils.isEmpty(email.text.toString()) ||
                 TextUtils.isEmpty(password.text.toString())
