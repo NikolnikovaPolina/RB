@@ -18,4 +18,16 @@
     <string name="minus">Минус</string>
     <string name="location">Геолокация</string>
     <string name="group">Группа</string>
+    <string name="close">Закрыть</string>
+    <string name="museum">Музеи</string>
+    <string name="temple">Храмы</string>
+    <string name="entertainment">Развлечения</string>
+    <string name="ecotrail">Экотропа</string>
+    <string name="boat_trip">Водные прогулки</string>
+    <string name="bus_ride">Автобусные прогулки</string>
+    <string name="active_leisure">Активный отдых</string>
+    <string name="walking_with_children">Прогулки с детьми</string>
+    <string name="places_for_photos">Места для фото</string>
+    <string name="ready_made_routes">Готовые маршруты</string>
+    <string name="group_route">Групповые маршруты</string>
 </resources>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+    <LinearLayout
+        android:id="@+id/search_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30sp"
+        android:layout_marginEnd="70sp"
+        android:background="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/autocomplete"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="40sp"
+        android:layout_marginEnd="80sp"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/close"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_marginStart="5sp"
+        android:layout_marginTop="25sp"
+        android:contentDescription="@string/close"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cross"
+        tools:ignore="ImageContrastCheck,TouchTargetSizeCheck" />
+
+    <TableLayout
+        android:id="@+id/categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        tools:ignore="VisualLintBounds">
+
+        <TableRow
+            android:id="@+id/categories_row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20sp">
+
+            <ImageButton
+                android:id="@+id/museum"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/museum"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/museum"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/temple"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/temple"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/temple"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/entertainment"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/entertainment"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/entertainment"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/ecotrail"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/ecotrail"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ecotrail"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/categories_row1_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10sp">
+
+            <TextView
+                android:id="@+id/museum_text"
+                android:layout_width="80sp"
+                android:text="@string/museum"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/temple_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/temple"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/entertainment_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/entertainment"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/ecotrail_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/ecotrail"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/categories_row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20sp">
+
+            <ImageButton
+                android:id="@+id/boat_trip"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/boat_trip"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/boat_trip"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/bus_ride"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/bus_ride"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/bus_ride"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/active_leisure"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/active_leisure"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/active_leisure"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/walking_with_children"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/walking_with_children"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/walking_with_children"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/categories_row2_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10sp">
+
+            <TextView
+                android:id="@+id/boat_trip_text"
+                android:layout_width="80sp"
+                android:text="@string/boat_trip"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/bus_ride_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/bus_ride"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/active_leisure_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/active_leisure"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/walking_with_children_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/walking_with_children"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/categories_row3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20sp">
+
+            <ImageButton
+                android:id="@+id/place_for_photo"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/places_for_photos"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/places_for_photos"
+                tools:ignore="ImageContrastCheck" />
+
+            <ImageButton
+                android:id="@+id/ready_made_routes"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/ready_made_routes"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ready_made_routes"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageButton
+                android:id="@+id/group_route"
+                android:layout_width="80sp"
+                android:layout_height="80sp"
+                android:layout_marginStart="20sp"
+                android:background="@drawable/custom"
+                android:contentDescription="@string/group_route"
+                android:padding="20sp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/group"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/categories_row3_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10sp">
+
+            <TextView
+                android:id="@+id/place_for_photo_text"
+                android:layout_width="80sp"
+                android:text="@string/places_for_photos"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/ready_made_routes_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/ready_made_routes"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/group_route_text"
+                android:layout_width="80sp"
+                android:layout_marginStart="20sp"
+                android:text="@string/group_route"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
