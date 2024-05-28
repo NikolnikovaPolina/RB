@@ -5,4 +5,5 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="white_60">#99FFFFFF</color>
     <color name="white_dark">#CACACA</color>
+    <color name="night">#5A595B</color>
 </resources>

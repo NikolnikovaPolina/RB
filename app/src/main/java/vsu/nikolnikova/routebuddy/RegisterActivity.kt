@@ -85,9 +85,9 @@ class RegisterActivity : AppCompatActivity() {
                                         )
                                     )
                                     .addOnSuccessListener {
-                                        /*val intent = Intent(this, MapsActivity::class.java)
+                                        val intent = Intent(this, MapsActivity::class.java)
                                         startActivity(intent)
-                                        finish()*/
+                                        finish()
                                     }
                                     .addOnFailureListener {
                                         Toast.makeText(

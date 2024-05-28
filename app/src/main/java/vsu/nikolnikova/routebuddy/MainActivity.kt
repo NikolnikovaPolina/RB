@@ -77,11 +77,11 @@ class MainActivity : AppCompatActivity() {
                                 password.text.toString()
                             )
                                 .addOnSuccessListener {
-                                    /*val intent = Intent(this, MapsActivity::class.java)
+                                    val intent = Intent(this, MapsActivity::class.java)
                                     intent.putExtra("uid", auth.currentUser?.uid)
                                     //getStringExtra("uid")
                                     startActivity(intent)
-                                    finish()*/
+                                    finish()
                                 }
                                 .addOnFailureListener {
                                     Toast.makeText(

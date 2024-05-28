@@ -11,4 +11,11 @@
     <string name="password">Пароль</string>
     <string name="password_repeat">Повторите пароль</string>
     <string name="create">Создать</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="user">Пользователь</string>
+    <string name="traffic">Дорожный трафик</string>
+    <string name="plus">Плюс</string>
+    <string name="minus">Минус</string>
+    <string name="location">Геолокация</string>
+    <string name="group">Группа</string>
 </resources>
