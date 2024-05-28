@@ -49,7 +49,7 @@
         android:contentDescription="@string/close"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/search"
+        app:layout_constraintStart_toEndOf="@+id/search_linearlayout"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cross"
         tools:ignore="ImageContrastCheck,TouchTargetSizeCheck" />
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintTop_toBottomOf="@+id/search_linearlayout"
         tools:ignore="VisualLintBounds">
 
         <TableRow

@@ -67,10 +67,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         user = findViewById(R.id.user)
 
-        /*user.setOnClickListener {
+        user.setOnClickListener {
             startActivity(Intent(this, UserActivity::class.java))
             finish()
-        }*/
+        }
 
         plus = findViewById(R.id.plus)
         minus = findViewById(R.id.minus)
@@ -93,9 +93,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         textView = findViewById(R.id.text)
         textView.setOnClickListener {
-            /*val intent = Intent(this, SearchActivity::class.java)
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
-            finish()*/
+            finish()
         }
     }
 
