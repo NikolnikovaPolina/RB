@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -41,76 +42,87 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        auth = FirebaseAuth.getInstance()
-
-        email = findViewById(R.id.email)
-        password = findViewById(R.id.password)
-        recoverPassword = findViewById(R.id.recover_password)
-        register = findViewById(R.id.register)
-
-        password.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                recoverPassword.isVisible = s.isNullOrBlank()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
+        auth = Firebase.auth
 
         val db = Firebase.firestore
-        enter = findViewById(R.id.login)
 
-        enter.setOnClickListener {
-            if (!TextUtils.isEmpty(email.text.toString()) &&
-                !TextUtils.isEmpty(password.text.toString())
-            ) {
+        if (auth.currentUser == null) {
 
-                db.collection("user").whereEqualTo("email", email.text.toString())
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        if (!documents.isEmpty) {
-                            auth.signInWithEmailAndPassword(
-                                email.text.toString(),
-                                password.text.toString()
-                            )
-                                .addOnSuccessListener {
-                                    val intent = Intent(this, MapsActivity::class.java)
-                                    intent.putExtra("uid", auth.currentUser?.uid)
-                                    //getStringExtra("uid")
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(
-                                        this,
-                                        it.message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Пользователя с такой почтой нет",
-                                Toast.LENGTH_LONG
-                            )
-                                .show()
+            email = findViewById(R.id.email)
+            password = findViewById(R.id.password)
+            recoverPassword = findViewById(R.id.recover_password)
+            register = findViewById(R.id.register)
+
+            password.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    recoverPassword.isVisible = s.isNullOrBlank()
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+            enter = findViewById(R.id.login)
+
+            enter.setOnClickListener {
+                if (!TextUtils.isEmpty(email.text.toString()) &&
+                    !TextUtils.isEmpty(password.text.toString())
+                ) {
+
+                    db.collection("user").whereEqualTo("email", email.text.toString())
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            if (!documents.isEmpty) {
+                                auth.signInWithEmailAndPassword(
+                                    email.text.toString(),
+                                    password.text.toString()
+                                )
+                                    .addOnSuccessListener {
+                                        val intent = Intent(this, MapsActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(
+                                            this,
+                                            it.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Пользователя с такой почтой нет",
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                            }
                         }
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.w(TAG, "Error getting documents: ", exception)
-                    }
-            } else if (TextUtils.isEmpty(email.text.toString()) ||
-                TextUtils.isEmpty(password.text.toString())
-            ) {
-                Toast.makeText(this, "Не все поля заполнены", Toast.LENGTH_LONG).show()
+                        .addOnFailureListener { exception ->
+                            Log.w(TAG, "Error getting documents: ", exception)
+                        }
+                } else if (TextUtils.isEmpty(email.text.toString()) ||
+                    TextUtils.isEmpty(password.text.toString())
+                ) {
+                    Toast.makeText(this, "Не все поля заполнены", Toast.LENGTH_LONG).show()
+                }
             }
-        }
 
-        register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            register.setOnClickListener {
+                val intent = Intent(this, RegisterActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        } else {
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -87,7 +87,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onError(status: Status) {
                 Toast.makeText(
                     applicationContext,
-                    "Отсутсвует подключение к интернету",
+                    status.statusMessage,
                     Toast.LENGTH_SHORT
                 )
                     .show()
