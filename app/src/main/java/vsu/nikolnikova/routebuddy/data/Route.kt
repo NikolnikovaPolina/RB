@@ -11,5 +11,7 @@ data class Route(
     @get:PropertyName("date of create")
     val dateOfCreate: LocalDate,
     @get:PropertyName("date of update")
-    val dateOfUpdate: LocalDate?
+    val dateOfUpdate: LocalDate?,
+    @get:PropertyName("uid user")
+    val uidUser: String,
 )

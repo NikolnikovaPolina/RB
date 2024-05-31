@@ -23,6 +23,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var textView: TextView
 
     private lateinit var close: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,6 +33,7 @@ class SearchActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         close = findViewById(R.id.close)
 
         close.setOnClickListener {

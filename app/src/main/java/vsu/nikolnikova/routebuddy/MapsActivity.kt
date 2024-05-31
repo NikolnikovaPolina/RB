@@ -125,7 +125,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val vsu = currentLocation
 
-        mMap.addMarker(MarkerOptions().position(vsu).title("Marker in VSU"))
+        //mMap.addMarker(MarkerOptions().position(vsu).title("Marker in VSU"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vsu, 18f))
     }
 

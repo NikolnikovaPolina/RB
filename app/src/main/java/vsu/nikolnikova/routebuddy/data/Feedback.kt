@@ -10,7 +10,7 @@ data class Feedback(
     val uidPointOfInterest: String?,
     @get:PropertyName("uid route")
     val uidRoute: String?,
-    val estimation: Double,
+    val estimation: Int,
     val comment: String?,
     @get:PropertyName("date of create")
     val dateOfCreate: LocalDate,
