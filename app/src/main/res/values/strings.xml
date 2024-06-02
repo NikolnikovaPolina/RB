@@ -34,4 +34,10 @@
     <string name="my_routes">Мои маршруты</string>
     <string name="exit">Выход</string>
     <string name="there_are_not_routes_created">Нет созданных маршрутов</string>
+    <string name="create_point">Создать точку</string>
+    <string name="fill_in_all_the_fields">Заполните все поля</string>
+    <string name="title">Название</string>
+    <string name="description">Описание</string>
+    <string name="cost">Стоимость</string>
+    <string name="category">Категории</string>
 </resources>

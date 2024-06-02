@@ -4,12 +4,12 @@ import com.google.android.libraries.places.api.model.LocalDate
 import com.google.firebase.firestore.PropertyName
 
 data class Feedback(
-    @get:PropertyName("uid user")
-    val uidUser: String,
-    @get:PropertyName("uid point of interest")
-    val uidPointOfInterest: String?,
-    @get:PropertyName("uid route")
-    val uidRoute: String?,
+    @get:PropertyName("id user")
+    val idUser: String,
+    @get:PropertyName("id point of interest")
+    val idPointOfInterest: String?,
+    @get:PropertyName("id route")
+    val idRoute: String?,
     val estimation: Int,
     val comment: String?,
     @get:PropertyName("date of create")

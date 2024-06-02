@@ -47,6 +47,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var user: ImageButton
 
+    private lateinit var createPoint: ImageButton
+
     private lateinit var autocomplete: AutocompleteSupportFragment
     private lateinit var textView: TextView
 
@@ -97,6 +99,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
             finish()
         }
+
+        createPoint = findViewById(R.id.create_point)
+        createPoint.setOnClickListener {
+            val intent = Intent(this, CreatePointActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -125,7 +134,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val vsu = currentLocation
 
-        //mMap.addMarker(MarkerOptions().position(vsu).title("Marker in VSU"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vsu, 18f))
     }
 
@@ -154,6 +162,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this, "Отключена геопозиция", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
+                finish()
             }
         } else {
             requestPermissions()

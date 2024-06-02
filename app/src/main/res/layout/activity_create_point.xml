@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".CreatePointActivity">
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fill_in_all_the_fields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/fill_in_all_the_fields"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:layout_marginTop="15sp"
+            android:autofillHints="@string/title"
+            android:backgroundTint="@color/white_dark"
+            android:hint="@string/title"
+            android:inputType="textAutoComplete"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_60"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:autofillHints="@string/description"
+            android:backgroundTint="@color/white_dark"
+            android:hint="@string/description"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:maxLines="5"
+            android:minHeight="48sp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_60"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/cost"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:layout_marginTop="5sp"
+            android:autofillHints="@string/cost"
+            android:backgroundTint="@color/white_dark"
+            android:hint="@string/cost"
+            android:imeOptions="actionDone"
+            android:inputType="phone"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_60"
+            android:textSize="18sp" />
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:completionThreshold="1"
+            android:hint="@string/category"
+            android:minHeight="48sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_60"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/create_point"
+        android:layout_below="@+id/form"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginBottom="20sp" />
+
+    <Button
+        android:id="@+id/create_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"
+        android:backgroundTint="@color/white_60"
+        android:text="@string/create_point"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+</RelativeLayout>

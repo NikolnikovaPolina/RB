@@ -123,4 +123,20 @@
         app:layout_constraintTop_toBottomOf="@+id/minus"
         app:srcCompat="@drawable/location"
         tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/create_point"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginEnd="10sp"
+        android:alpha="0.8"
+        android:background="@drawable/custom_image_button"
+        android:contentDescription="@string/create_point"
+        android:padding="10sp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location"
+        app:srcCompat="@drawable/create_point"
+        tools:ignore="ImageContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,9 +74,9 @@ class UserActivity : AppCompatActivity() {
         myRoutesTextNo = findViewById(R.id.my_routes_text_no)
         linearLayoutRoutes = findViewById(R.id.linear_layout_routes)
 
-        val userUid = auth.currentUser?.uid
+        val userId = auth.currentUser?.uid
 
-        db.collection("route").whereEqualTo("uid user", userUid)
+        db.collection("route").whereEqualTo("id user", userId)
             .get()
             .addOnSuccessListener { documents ->
                 if (documents.size() != 0) {
@@ -118,10 +118,10 @@ class UserActivity : AppCompatActivity() {
                         imageButton.setPadding(5, 20, 5, 0)
                         imageButton.scaleType = ImageView.ScaleType.CENTER_INSIDE
 
-                        val routeUid = document.id
+                        val routeId = document.id
                         val textRating = TextView(this)
 
-                        db.collection("feedback").whereEqualTo("uid route", routeUid)
+                        db.collection("feedback").whereEqualTo("id route", routeId)
                             .get()
                             .addOnSuccessListener { docs ->
                                 var totalRating = 0.0

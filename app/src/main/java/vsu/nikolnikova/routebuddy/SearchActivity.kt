@@ -24,6 +24,8 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var close: ImageButton
 
+    private lateinit var placeForPhoto: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,6 +41,7 @@ class SearchActivity : AppCompatActivity() {
         close.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         textView = findViewById(R.id.text)
@@ -95,5 +98,12 @@ class SearchActivity : AppCompatActivity() {
                     .show()
             }
         })
+
+        placeForPhoto = findViewById(R.id.place_for_photo)
+        placeForPhoto.setOnClickListener {
+            val intent = Intent(this, PlaceForPhotoActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
