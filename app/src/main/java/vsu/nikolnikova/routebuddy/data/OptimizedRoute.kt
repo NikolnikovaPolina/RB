@@ -1,6 +1,5 @@
 package vsu.nikolnikova.routebuddy.data
 
-import com.google.android.libraries.places.api.model.LocalDate
 import com.google.firebase.firestore.PropertyName
 
 data class OptimizedRoute(
@@ -10,7 +9,5 @@ data class OptimizedRoute(
     @get:PropertyName("id route")
     val idRoute: String,
     val distance: Double,
-    val cost: Double?,
-    @get:PropertyName("date of create")
-    val dateOfCreate: LocalDate
+    val cost: Double?
 )

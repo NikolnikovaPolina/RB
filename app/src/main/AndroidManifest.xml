@@ -16,6 +16,18 @@
         android:theme="@style/Theme.RouteBuddy"
         tools:targetApi="31">
         <activity
+            android:name=".ReadyMadeRoutesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateFeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateRouteActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreatePointActivity"
             android:exported="false" />
         <activity

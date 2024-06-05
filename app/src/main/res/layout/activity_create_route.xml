@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".CreatePointActivity">
+    tools:context=".CreateRouteActivity">
 
     <ImageButton
         android:id="@+id/last"
@@ -21,6 +21,7 @@
         android:scaleType="centerInside"
         app:srcCompat="@drawable/last"
         tools:ignore="ImageContrastCheck,TouchTargetSizeCheck" />
+
 
     <LinearLayout
         android:id="@+id/form"
@@ -75,32 +76,16 @@
             android:textColorHint="@color/white_60"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/cost"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:layout_marginTop="5sp"
-            android:autofillHints="@string/cost"
-            android:backgroundTint="@color/white_dark"
-            android:hint="@string/cost"
-            android:imeOptions="actionDone"
-            android:inputType="phone"
-            android:selectAllOnFocus="true"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white_60"
-            android:textSize="18sp" />
-
-        <MultiAutoCompleteTextView
-            android:id="@+id/category"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/select_points_on_the_map"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
-            android:completionThreshold="1"
-            android:hint="@string/category"
-            android:minHeight="48sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
+            android:text="@string/select_points_on_the_map"
             android:textColor="@color/white"
-            android:textColorHint="@color/white_60"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
@@ -108,7 +93,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/create_point"
+        android:layout_above="@+id/create_route"
         android:layout_below="@+id/form"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -118,7 +103,7 @@
         android:layout_marginBottom="20sp" />
 
     <Button
-        android:id="@+id/create_point"
+        android:id="@+id/create_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -126,8 +111,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="20sp"
         android:backgroundTint="@color/white_60"
-        android:text="@string/create_point"
+        android:text="@string/create_route"
         android:textColor="@color/black"
         android:textSize="20sp" />
-
 </RelativeLayout>

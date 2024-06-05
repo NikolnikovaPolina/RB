@@ -1,6 +1,6 @@
 package vsu.nikolnikova.routebuddy.data
 
-import com.google.android.libraries.places.api.model.LocalDate
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.PropertyName
 
 data class Feedback(
@@ -13,7 +13,7 @@ data class Feedback(
     val estimation: Int,
     val comment: String?,
     @get:PropertyName("date of create")
-    val dateOfCreate: LocalDate,
+    val dateOfCreate: Timestamp,
     @get:PropertyName("date of update")
-    val dateOfUpdate: LocalDate?
+    val dateOfUpdate: Timestamp?
 )

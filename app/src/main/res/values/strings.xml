@@ -40,4 +40,12 @@
     <string name="description">Описание</string>
     <string name="cost">Стоимость</string>
     <string name="category">Категории</string>
+    <string name="create_route">Создать маршрут</string>
+    <string name="select_points_on_the_map">Выберите точки на карте</string>
+    <string name="text_of_the_review">Текст отзыва</string>
+    <string name="give_rating">Поставьте оценку</string>
+    <string name="save_feedback">Сохранить отзыв</string>
+    <string name="create_feedback">Создать отзыв</string>
+    <string name="there_are_no_reviews">Нет отзывов</string>
+    <string name="star1">Первая звезда</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.MultiAutoCompleteTextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,13 +29,15 @@ import java.util.LinkedList
 class CreatePointActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var title: EditText
-    private lateinit var description: EditText
+    private var description: EditText? = null
     private lateinit var cost: EditText
     private lateinit var category: MultiAutoCompleteTextView
 
     private lateinit var mMap: GoogleMap
 
     private lateinit var createPoint: Button
+
+    private lateinit var last: ImageButton
 
     private lateinit var auth: FirebaseAuth
 
@@ -103,10 +106,11 @@ class CreatePointActivity : AppCompatActivity(), OnMapReadyCallback {
                                 .get()
                                 .addOnSuccessListener { docs ->
                                     for (doc in docs) {
+
                                         db.collection("point of interest").document().set(
                                             PointOfInterest(
                                                 title.text.toString(),
-                                                description.text.toString(),
+                                                description?.text.toString(),
                                                 point,
                                                 cost.text.toString().toDoubleOrNull(),
                                                 userId.toString(),
@@ -129,6 +133,13 @@ class CreatePointActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
 
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        last = findViewById(R.id.last)
+        last.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
             finish()

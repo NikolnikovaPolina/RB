@@ -25,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var close: ImageButton
 
     private lateinit var placeForPhoto: ImageButton
+    private lateinit var readyMadeRoutes: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +103,15 @@ class SearchActivity : AppCompatActivity() {
         placeForPhoto = findViewById(R.id.place_for_photo)
         placeForPhoto.setOnClickListener {
             val intent = Intent(this, PlaceForPhotoActivity::class.java)
+            intent.putExtra("category", "Места для фото")
+            startActivity(intent)
+            finish()
+        }
+
+        readyMadeRoutes = findViewById(R.id.ready_made_routes)
+        readyMadeRoutes.setOnClickListener{
+            val intent = Intent(this, ReadyMadeRoutesActivity::class.java)
+            intent.putExtra("category", "Готовые маршруты")
             startActivity(intent)
             finish()
         }
