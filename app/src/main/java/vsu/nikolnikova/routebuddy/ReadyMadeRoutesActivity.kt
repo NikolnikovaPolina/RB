@@ -216,12 +216,12 @@ class ReadyMadeRoutesActivity : AppCompatActivity() {
 
                 linearLayoutPoints.addView(linearLayoutVertical)
 
-                linearLayoutVertical.setOnClickListener {
+                /*linearLayoutVertical.setOnClickListener {
                     val intent = Intent(this, CreateRouteActivity::class.java)
 
                     startActivity(intent)
                     finish()
-                }
+                }*/
             }
         }
     }

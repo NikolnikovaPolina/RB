@@ -289,18 +289,6 @@
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/ready_made_routes"
                 tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
-
-            <ImageButton
-                android:id="@+id/group_route"
-                android:layout_width="80sp"
-                android:layout_height="80sp"
-                android:layout_marginStart="20sp"
-                android:background="@drawable/custom_image_button"
-                android:contentDescription="@string/group_route"
-                android:padding="20sp"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/group"
-                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
         </TableRow>
 
         <TableRow
@@ -323,16 +311,6 @@
                 android:layout_width="80sp"
                 android:layout_marginStart="20sp"
                 android:text="@string/ready_made_routes"
-                android:textAlignment="center"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                tools:ignore="TextSizeCheck" />
-
-            <TextView
-                android:id="@+id/group_route_text"
-                android:layout_width="80sp"
-                android:layout_marginStart="20sp"
-                android:text="@string/group_route"
                 android:textAlignment="center"
                 android:textSize="13sp"
                 android:textStyle="bold"

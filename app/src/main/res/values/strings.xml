@@ -29,7 +29,6 @@
     <string name="walking_with_children">Прогулки с детьми</string>
     <string name="places_for_photos">Места для фото</string>
     <string name="ready_made_routes">Готовые маршруты</string>
-    <string name="group_route">Групповые маршруты</string>
     <string name="empty" />
     <string name="my_routes">Мои маршруты</string>
     <string name="exit">Выход</string>
@@ -47,5 +46,5 @@
     <string name="save_feedback">Сохранить отзыв</string>
     <string name="create_feedback">Создать отзыв</string>
     <string name="there_are_no_reviews">Нет отзывов</string>
-    <string name="star1">Первая звезда</string>
+    <string name="star1">Звезда</string>
 </resources>

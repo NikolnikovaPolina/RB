@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,7 +15,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -25,11 +29,12 @@ import com.google.firebase.ktx.Firebase
 import vsu.nikolnikova.routebuddy.data.Route
 import vsu.nikolnikova.routebuddy.data.Waypoint
 
+
 class CreateRouteActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var title: EditText
 
-    private var description: EditText? = null
+    private lateinit var description: EditText
 
     private lateinit var mMap: GoogleMap
 
@@ -41,6 +46,13 @@ class CreateRouteActivity : AppCompatActivity(), OnMapReadyCallback {
     private val db: FirebaseFirestore = Firebase.firestore
 
     private lateinit var point: GeoPoint
+    private lateinit var routeId: String
+
+    private lateinit var userId: String
+
+    private val routePoints = mutableListOf<LatLng>()
+    private val pointsSave = mutableListOf<LatLng>()
+    private val pointsSaveId = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +72,7 @@ class CreateRouteActivity : AppCompatActivity(), OnMapReadyCallback {
         val pointY = intent.getStringExtra("coordinateY")
         point = GeoPoint(pointX!!.toDouble(), pointY!!.toDouble())
 
-        val userId = auth.currentUser?.uid
+        userId = auth.currentUser?.uid.toString()
 
         title = findViewById(R.id.title)
         description = findViewById(R.id.description)
@@ -68,18 +80,26 @@ class CreateRouteActivity : AppCompatActivity(), OnMapReadyCallback {
         createRoute = findViewById(R.id.create_route)
 
         createRoute.setOnClickListener {
-            db.collection("route").document().set(
+            db.collection("route").add(
                 Route(
                     title.text.toString(),
-                    description?.text.toString(),
+                    if (description.text.isEmpty()) null else description.text.toString(),
                     0.0,
                     Timestamp.now(),
                     null,
-                    userId.toString()
+                    userId
                 )
             )
+                .addOnSuccessListener { document ->
+                    routeId = document.id
+                    addFirestore()
+                    Toast.makeText(this, routePoints.toString(), Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MapsActivity::class.java)
+                    intent.putExtra("routeId", routeId)
+                    startActivity(intent)
+                    finish()
+                }
         }
-        // создать маршрут и добавлять в точки маршрута по номерам
 
         last = findViewById(R.id.last)
         last.setOnClickListener {
@@ -104,20 +124,109 @@ class CreateRouteActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.addMarker(MarkerOptions().position(LatLng(point.latitude, point.longitude)))
 
-        mMap.setOnMapClickListener { latLng ->
-            val latitude = latLng.latitude
-            val longitude = latLng.longitude
+        db.collection("point of interest").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val coordinate = document.getGeoPoint("coordinate")
+                val marker = MarkerOptions()
+                    .position(LatLng(coordinate!!.latitude, coordinate.longitude))
+                    .title(document.getString("name").toString())
+                mMap.addMarker(marker)
+            }
+        }
 
-            db.collection("route").document().set(
-                Waypoint(
-                    "",
-                    "",
-                    1
-                )
+        mMap.setOnMarkerClickListener { marker ->
+            showMarkerDialog(marker)
+            true
+        }
+
+        mMap.setOnMapClickListener { latLng ->
+            routePoints.add(latLng)
+
+            mMap.addMarker(
+                MarkerOptions().position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
             )
 
-            mMap.addMarker(MarkerOptions().position(latLng))
-            point = GeoPoint(latitude, longitude)
         }
+    }
+
+    private fun showMarkerDialog(marker: Marker) {
+        val builder = AlertDialog.Builder(this, R.style.CustomDialogStyle)
+        if (marker.title != null) {
+            builder.setTitle(marker.title)
+        }
+
+        builder.setMessage("Что вы хотите сделать с этой точкой?")
+            .setPositiveButton("Добавить") { _, _ ->
+                if (routePoints.indexOf(marker.position) != -1) {
+                    routePoints.remove(marker.position)
+                    Toast.makeText(
+                        this@CreateRouteActivity,
+                        "Точка добавлена в конец маршрута",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@CreateRouteActivity,
+                        "Точка добавлена в машрут",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                routePoints.add(marker.position)
+            }
+            .setNegativeButton("Удалить") { _, _ ->
+                if (marker.title == null) {
+                    marker.remove()
+                    Toast.makeText(
+                        this@CreateRouteActivity,
+                        "Точка удалена",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    if (routePoints.indexOf(marker.position) == -1) {
+                        Toast.makeText(
+                            this@CreateRouteActivity,
+                            "Точка не может быть удалена с карты",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@CreateRouteActivity,
+                            "Точка удалена",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                routePoints.remove(marker.position)
+            }
+
+            .setNeutralButton("Отмена")
+            { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun addFirestore() {
+        db.collection("point of interest")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val coordinate = document.getGeoPoint("coordinate")
+                    pointsSave.add(LatLng(coordinate!!.latitude, coordinate.longitude))
+                    pointsSaveId.add(document.id)
+                }
+
+                for (p in routePoints) {
+                    db.collection("waypoint").document().set(
+                        Waypoint(
+                            routeId,
+                            if (pointsSave.indexOf(p) != -1) pointsSaveId[pointsSave.indexOf(p)] else null,
+                            GeoPoint(p.latitude, p.longitude),
+                            routePoints.indexOf(p) + 1
+                        )
+                    )
+                }
+            }
     }
 }
