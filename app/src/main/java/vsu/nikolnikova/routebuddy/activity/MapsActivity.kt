@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import vsu.nikolnikova.routebuddy.BuildConfig
+import vsu.nikolnikova.routebuddy.R
 import vsu.nikolnikova.routebuddy.databinding.ActivityMapsBinding
 
 @Suppress("DEPRECATION")

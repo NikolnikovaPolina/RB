@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import vsu.nikolnikova.routebuddy.R
 
 class PlaceForPhotoActivity : AppCompatActivity() {
 
@@ -240,6 +241,7 @@ class PlaceForPhotoActivity : AppCompatActivity() {
                                         "coordinateY",
                                         doc.getGeoPoint("coordinate")!!.longitude.toString()
                                     )
+                                    intent.putExtra("category", category)
                                     startActivity(intent)
                                     finish()
                                 }

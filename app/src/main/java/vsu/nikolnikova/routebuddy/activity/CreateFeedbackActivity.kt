@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import vsu.nikolnikova.routebuddy.R
 import vsu.nikolnikova.routebuddy.data.Feedback
 
 @Suppress("UNCHECKED_CAST")
@@ -128,7 +129,7 @@ class CreateFeedbackActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { documents ->
                     if (documents.isEmpty) {
-                        db.collection("feedback").document().set(
+                        db.collection("feedback").add(
                             Feedback(
                                 userId,
                                 if (pointOrRoute != "route") id else null,
@@ -143,12 +144,10 @@ class CreateFeedbackActivity : AppCompatActivity() {
                         for (document in documents) {
                             db.collection("feedback").document(document.id).update(
                                 hashMapOf(
-                                    "id user" to userId,
                                     "id point of interest" to if (pointOrRoute != "route") id else null,
                                     "id route" to if (pointOrRoute == "route") id else null,
                                     "estimation" to rating,
-                                    "comment" to textReview.text.toString(),
-                                    "date of create" to document.getTimestamp("date of create")!!,
+                                    "comment" to if (textReview.text.isEmpty()) textReview.text.toString() else null,
                                     "date of update" to Timestamp.now()
                                 ) as Map<String, Any>
                             )
@@ -159,6 +158,8 @@ class CreateFeedbackActivity : AppCompatActivity() {
             val intent = Intent(this, FeedbackActivity::class.java)
             intent.putExtra("category", this.intent.getStringExtra("category"))
             intent.putExtra("name", this.intent.getStringExtra("name"))
+            intent.putExtra("pointOrRoute", this.intent.getStringExtra("pointOrRoute"))
+            intent.putExtra("id", this.intent.getStringExtra("id"))
             startActivity(intent)
             finish()
         }

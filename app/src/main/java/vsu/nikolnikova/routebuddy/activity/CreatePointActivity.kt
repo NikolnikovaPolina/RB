@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +23,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import vsu.nikolnikova.routebuddy.R
 import vsu.nikolnikova.routebuddy.data.PointOfInterest
 import java.util.LinkedList
 

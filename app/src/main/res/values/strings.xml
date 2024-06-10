@@ -47,4 +47,5 @@
     <string name="create_feedback">Создать отзыв</string>
     <string name="there_are_no_reviews">Нет отзывов</string>
     <string name="star1">Звезда</string>
+    <string name="optimization">Оптимизировать маршрут</string>
 </resources>

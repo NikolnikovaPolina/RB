@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -17,6 +17,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import vsu.nikolnikova.routebuddy.R
 import vsu.nikolnikova.routebuddy.data.User
 
 class RegisterActivity : AppCompatActivity() {

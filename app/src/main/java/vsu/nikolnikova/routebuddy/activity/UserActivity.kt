@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,18 +14,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import vsu.nikolnikova.routebuddy.R
 
 class UserActivity : AppCompatActivity() {
 
     private lateinit var last: ImageButton
     private lateinit var exit: ImageButton
-
     private lateinit var name: TextView
-    private lateinit var auth: FirebaseAuth
+
+    private val auth: FirebaseAuth = Firebase.auth
+    private val db: FirebaseFirestore = Firebase.firestore
 
     private lateinit var myRoutesTextNo: TextView
     private lateinit var linearLayoutRoutes: LinearLayout
@@ -40,10 +50,8 @@ class UserActivity : AppCompatActivity() {
             insets
         }
 
-        auth = Firebase.auth
         name = findViewById(R.id.user_name)
 
-        val db = Firebase.firestore
         val userEmail = auth.currentUser?.email
 
         db.collection("user").whereEqualTo("email", userEmail.toString())
@@ -153,10 +161,65 @@ class UserActivity : AppCompatActivity() {
                         linearLayout.addView(imageButton)
 
                         linearLayoutRoutes.addView(linearLayout)
+
+                        linearLayout.setOnClickListener {
+                            lifecycleScope.launch {
+                                val intent = Intent(
+                                    this@UserActivity,
+                                    CreateRouteActivity::class.java
+                                )
+                                val routePoints =
+                                    withContext(Dispatchers.IO) { collectPoints(routeId) }
+                                intent.putExtra(
+                                    "coordinateX",
+                                    if (routePoints.size != 0) routePoints[0].latitude.toString() else "51.656680042276435"
+                                )
+                                intent.putExtra(
+                                    "coordinateY",
+                                    if (routePoints.size != 0) routePoints[0].longitude.toString() else "39.206041019902685"
+                                )
+
+                                intent.putExtra("routePoints", ArrayList(routePoints))
+                                intent.putExtra("routeId", routeId)
+                                intent.putExtra("category", "Готовые маршруты")
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
                     }
                 } else {
                     myRoutesTextNo.isVisible = true
                 }
             }
+    }
+
+    private suspend fun collectPoints(routeId: String): MutableList<LatLng> {
+
+        val routePoints = mutableListOf<LatLng>()
+        val routeRandomPoints = mutableListOf<GeoPoint>()
+
+        db.collection("waypoint")
+            .whereEqualTo("id route", routeId)
+            .get()
+            .await()
+            .forEach { document ->
+                val coordinate = document.getGeoPoint("point")!!
+                routeRandomPoints.add(coordinate)
+                routePoints.add(LatLng(coordinate.latitude, coordinate.longitude))
+            }
+
+        for (point in routeRandomPoints) {
+            db.collection("waypoint")
+                .whereEqualTo("id route", routeId)
+                .whereEqualTo("point", point)
+                .get()
+                .await()
+                .forEach { doc ->
+                    routePoints[doc.getDouble("order of the visit")!!.toInt() - 1] =
+                        LatLng(point.latitude, point.longitude)
+                }
+        }
+
+        return routePoints
     }
 }

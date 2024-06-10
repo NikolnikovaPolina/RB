@@ -2,9 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
 
     <application
         android:allowBackup="true"
@@ -16,31 +22,31 @@
         android:theme="@style/Theme.RouteBuddy"
         tools:targetApi="31">
         <activity
-            android:name=".MapsRouteActivity"
+            android:name=".activity.MapsRouteActivity"
             android:exported="false" />
         <activity
-            android:name=".ReadyMadeRoutesActivity"
+            android:name=".activity.ReadyMadeRoutesActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateFeedbackActivity"
+            android:name=".activity.CreateFeedbackActivity"
             android:exported="false" />
         <activity
-            android:name=".FeedbackActivity"
+            android:name=".activity.FeedbackActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateRouteActivity"
+            android:name=".activity.CreateRouteActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatePointActivity"
+            android:name=".activity.CreatePointActivity"
             android:exported="false" />
         <activity
-            android:name=".PlaceForPhotoActivity"
+            android:name=".activity.PlaceForPhotoActivity"
             android:exported="false" />
         <activity
-            android:name=".UserActivity"
+            android:name=".activity.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".activity.SearchActivity"
             android:exported="false" />
 
         <meta-data
@@ -51,14 +57,14 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activity.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

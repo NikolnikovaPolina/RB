@@ -52,9 +52,13 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
-
-    implementation (libs.bcrypt)
-
+    implementation(libs.osmdroid.android)
+    implementation (libs.okhttp3.okhttp)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.bcrypt)
+    implementation(libs.android.maps.utils)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

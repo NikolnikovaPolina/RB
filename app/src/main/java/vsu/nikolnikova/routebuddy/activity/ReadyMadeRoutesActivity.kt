@@ -1,4 +1,4 @@
-package vsu.nikolnikova.routebuddy
+package vsu.nikolnikova.routebuddy.activity
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -15,8 +15,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import vsu.nikolnikova.routebuddy.R
 
 class ReadyMadeRoutesActivity : AppCompatActivity() {
     private lateinit var linearLayoutPoints: LinearLayout
@@ -24,6 +33,8 @@ class ReadyMadeRoutesActivity : AppCompatActivity() {
     private lateinit var last: ImageButton
 
     private lateinit var name: TextView
+
+    private val db: FirebaseFirestore = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +60,6 @@ class ReadyMadeRoutesActivity : AppCompatActivity() {
         name.text = category
 
         linearLayoutPoints = findViewById(R.id.linear_layout_points)
-
-        val db = Firebase.firestore
 
         db.collection("route").get().addOnSuccessListener { documents ->
             for (document in documents) {
@@ -216,13 +225,51 @@ class ReadyMadeRoutesActivity : AppCompatActivity() {
 
                 linearLayoutPoints.addView(linearLayoutVertical)
 
-                /*linearLayoutVertical.setOnClickListener {
-                    val intent = Intent(this, CreateRouteActivity::class.java)
-
-                    startActivity(intent)
-                    finish()
-                }*/
+                linearLayoutVertical.setOnClickListener {
+                    lifecycleScope.launch {
+                        val intent = Intent(
+                            this@ReadyMadeRoutesActivity,
+                            MapsRouteActivity::class.java
+                        )
+                        intent.putExtra("routeId", routeId)
+                        val routePoints = withContext(Dispatchers.IO) { collectPoints(routeId) }
+                        intent.putExtra("routePoints", ArrayList(routePoints))
+                        intent.putExtra("category", category)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             }
         }
+    }
+
+    private suspend fun collectPoints(routeId: String): MutableList<LatLng> {
+
+        val routePoints = mutableListOf<LatLng>()
+        val routeRandomPoints = mutableListOf<GeoPoint>()
+
+        db.collection("waypoint")
+            .whereEqualTo("id route", routeId)
+            .get()
+            .await()
+            .forEach { document ->
+                val coordinate = document.getGeoPoint("point")!!
+                routeRandomPoints.add(coordinate)
+                routePoints.add(LatLng(coordinate.latitude, coordinate.longitude))
+            }
+
+        for (point in routeRandomPoints) {
+            db.collection("waypoint")
+                .whereEqualTo("id route", routeId)
+                .whereEqualTo("point", point)
+                .get()
+                .await()
+                .forEach { doc ->
+                    routePoints[doc.getDouble("order of the visit")!!.toInt() - 1] =
+                        LatLng(point.latitude, point.longitude)
+                }
+        }
+
+        return routePoints
     }
 }
